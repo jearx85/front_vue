@@ -4,7 +4,7 @@
                 <div class="mb-3">
                     <label for="name" class="form-label" >Nombre de la categoria</label>
                     <input type="text" 
-                    class="form-control" id="name" required name = "name" :name="categories.name" />
+                    class="form-control" id="name" required name = "name" v-model="categories.name" />
                 
                 </div>
                 <div class="mb-3">
@@ -20,24 +20,7 @@
 <script>
     export default {
         props: ['id'],
-            async created(){
-                const options = {
-                    method: "GET"
-                }
-
-                const response = await fetch("http://127.0.0.1:8000/api/category/" + this.id + "/edit", options);
-                const data = await response.json();
-
-               console.log(data);
-                let editCategoryData = {
-                    name: data.name,
-                    description: data.description
-                }
-
-                this.categories = editCategoryData;
-                console.log(editCategoryData);
-            },
-            data(){
+        data(){
                 return{
                     categories:{
                     name: "",
@@ -45,29 +28,38 @@
                     }
                 }
             },
-        
+            async created(){
+                const options = {
+                    method: "GET"
+                }
+
+                const response = await fetch("http://127.0.0.1:8000/api/category/" + this.$route.params.id+ "/edit", options);
+                //console.log(this.$route.params.id);
+                const {data: categories} = await response.json();
+
+                this.categories = categories;
+                //console.log(categories.name);
+            },
             methods:{
-                async updateCategory(e){
-                    e.preventDefault();
-                    const options = {
+               async updateCategory(){
+                const options = {
                     method: "PUT",
-                    headers: { 
-                        'Content-Type': 'application/json'
-                    },
-                    body:  JSON.stringify(this.category)
+                    headers: { "Content-Type": "application/json"},
+                    body: JSON.stringify(this.categories)
                 }
-
-                    const response = await fetch("http://127.0.0.1:8000/api/category/"+ this.id +"/update", options);
-                    const data = await response.json();
-
-                    // console.log(data);
-                    alert('categoria actualizada')
-
-                    this.$router.replace({path: '/'});
-                    //this.categories = data.data;
-
-                }
+               
+                const response = await fetch("http://127.0.0.1:8000/api/category/" + this.$route.params.id+ "/update",options);
+                const data = await response.json();
+                console.log(data);
+                this.category = data.data;
+                alert("Categoria actualizada")
+                window.location.href="/"
             }
+
+            }
+            
+            
+    
             
         }
 

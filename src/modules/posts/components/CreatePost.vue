@@ -4,7 +4,7 @@
     <form class="row g-3">
     <div class="col-md-4">
         <label for="categoria" class="form-label">Categoría</label>
-        <select class="form-select" v-model="selectCategory">
+        <select class="form-select" v-model="post.category_id">
             <option disabled selected>Seleccione una categoría</option>
             <option v-for="categ in categories" :key="categ.id" :value="categ.id">{{ categ.name }}</option>
         </select>
@@ -41,6 +41,7 @@
 
 <script>
  export default{
+    props: ['id'],
     async created(){
             const options = {
                 method: "GET"
@@ -55,20 +56,20 @@
         },
         data(){
             return{
+                
                 categories: [], 
-                selectCategory: "",
-                post: {
+                post:{
+                    category_id: "",
                     title: "",
                     description: "",
                     state: "",
                     content: ""
-                   
-                }
+                    
+                }                
             }
         },
         methods:{
-        async newPost(e){
-            e.preventDefault();
+        async newPost(){
             const options = {
                 method: "POST",
                 headers: { "Content-Type": "application/json"},
@@ -76,10 +77,9 @@
             }
             const response = await fetch("http://127.0.0.1:8000/api/post/store", options);
             const data = await response.json();
-            console.log(data);
-
-            this.$router.replace({path: '/posts'});
+            //console.log(data);
             alert("post creado con exito");
+            //this.$router.replace({path: '/posts'});
         }
     }
  }
