@@ -28,6 +28,7 @@
                     }
                 }
             },
+    
             async created(){
                 const options = {
                     method: "GET"
@@ -38,10 +39,11 @@
                 const {data: categories} = await response.json();
 
                 this.categories = categories;
-                //console.log(categories.name);
+                console.log("created");
             },
             methods:{
-               async updateCategory(){
+               async updateCategory(e){
+                e.preventDefault();
                 const options = {
                     method: "PUT",
                     headers: { "Content-Type": "application/json"},
@@ -49,17 +51,17 @@
                 }
                
                 const response = await fetch("http://127.0.0.1:8000/api/category/" + this.$route.params.id+ "/update",options);
-                const data = await response.json();
-                console.log(data);
-                this.category = data.data;
+                const dataCategory = await response.json();
+                //console.log(dataCategory);
+
+                this.categories = dataCategory;
                 alert("Categoria actualizada")
-                window.location.href="/"
+                console.log("actualizado")
+                //window.location.href="/"
+                this.$router.push({name: 'home'});
             }
 
             }
-            
-            
-    
             
         }
 

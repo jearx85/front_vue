@@ -2,27 +2,25 @@
     <h1>Actualizar post</h1>
     <div class="container">
         <form class="row g-3">
+
         <div class="col-md-4">
-            <label for="categoria" class="form-label">Categoría</label>
-            <select class="form-select" v-model="selectCategory">
-                <option disabled selected>Seleccione una categoría</option>
-                <option v-for="categ in categories" :key="categ.id" :value="categ.id">{{ categ.name }}</option>
-            </select>
+            <label for="category" class="form-label">Categoria</label>
+            <input type="text" class="form-control" id="category" required name = "category"  v-model="post.category_id" readonly>
 
         </div>
         <div class="col-md-4">
             <label for="title" class="form-label">Titulo</label>
-            <input type="text" class="form-control" id="title" required name = "title"  v-model="posts.title">
+            <input type="text" class="form-control" id="title" required name = "title"  v-model="post.title">
 
         </div>
         <div class="col-md-6">
             <label for="description" class="form-label">Descripción</label>
-            <input type="text" class="form-control" id="description" required name = "description"  v-model = "posts.description">
+            <input type="text" class="form-control" id="description" required name = "description"  v-model = "post.description">
 
         </div>
         <div class="col-md-3">
             <label for="state" class="form-label">Estado</label>
-            <select class="form-select" id="state" required name = "state"  v-model ="posts.state">
+            <select class="form-select" id="state" required name = "state"  v-model ="post.state">
             <option selected disabled>Seleccione</option>
             <option value = '1'>Publicado</option>
             <option value = '0'>No publicado</option>
@@ -30,10 +28,10 @@
         </div>
         <div class="col-12">
             <label for="content" class="form-label">Contenido</label>
-            <input type="text" class="form-control" id="content" required name = "content"  v-model="posts.content">
+            <input type="text" class="form-control" id="content" required name = "content"  v-model="post.content">
         </div>
         <div>
-            <button class="btn btn-primary" type="submit" @click="newPost">Actualizar</button>
+            <button class="btn btn-primary" type="submit" @click="updatePost">Actualizar</button>
         </div>
     </form>
 </div> 
@@ -42,28 +40,55 @@
 </template>
 
 <script>
-export default {
+    export default {
+        props: ['id'],
         data(){
-            return{
-                posts: [],
-                categories: [], 
-                selectCategory: ""
-            }
-        },
-        created:function(){
+                return{
+                    post:{
+                    category_id: "",
+                    title: "",
+                    description: "",
+                    state: "",
+                    content: ""
+                    }
+                }
+            },
+    
+            async created(){
+                const options = {
+                    method: "GET"
+                }
 
-        },
-        methods:{
-            getById(){
-                fetch("http://127.0.0.1:8000/api/post/"+ this.$route.params.id)
-                .then(respuesta=>respuesta.json())
-                .then((datosRespuesta)=>{
-                    console.log(datosRespuesta)
-                    this.posts=[0]
-                })
+                const response = await fetch("http://127.0.0.1:8000/api/post/" + this.$route.params.id+ "/edit", options);
+                //console.log(this.$route.params.id);
+                const {data: post} = await response.json();
+
+                this.post = post;
+                console.log("created");
+            },
+            methods:{
+               async updatePost(e){
+                e.preventDefault();
+                const options = {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json"},
+                    body: JSON.stringify(this.post)
+                }
+               
+                const response = await fetch("http://127.0.0.1:8000/api/post/" + this.$route.params.id+ "/update",options);
+                const dataPost = await response.json();
+                //console.log(dataPost);
+
+                this.post = dataPost;
+                alert("Post actualizado")
+                console.log("actualizado")
+                //window.location.href="/"
+                this.$router.push({name: 'homePost'});
             }
+
+            }
+            
         }
-    }
 
 </script>
 

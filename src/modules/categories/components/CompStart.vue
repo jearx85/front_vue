@@ -29,6 +29,7 @@
                 
             </tbody>
         </table>
+        
         <router-link to = '/create/category'>
         <button type="button" class="btn">Nueva categoria</button>
         </router-link>

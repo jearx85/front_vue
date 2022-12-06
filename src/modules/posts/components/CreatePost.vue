@@ -69,7 +69,8 @@
             }
         },
         methods:{
-        async newPost(){
+        async newPost(e){
+            e.preventDefault();
             const options = {
                 method: "POST",
                 headers: { "Content-Type": "application/json"},
@@ -79,7 +80,7 @@
             const data = await response.json();
             //console.log(data);
             alert("post creado con exito");
-            //this.$router.replace({path: '/posts'});
+            this.$router.replace({path: '/posts'});
         }
     }
  }

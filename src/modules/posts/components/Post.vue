@@ -17,7 +17,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="post in posts" :key="id" >
+                <tr v-for="post in posts" :key="post.id" >
                 <td>{{ post.id }}</td>
                 <td>{{ post.category_id }}</td>
                 <td>{{ post.title }}</td>
@@ -77,7 +77,7 @@ export default {
                 // console.log(data.data.newList);
                 alert("Post eliminado")
                 this.post = data.data;
-                this.$router.replace({path: '/posts'});
+                this.$router.push({name: 'home'});
             
             }
         }

@@ -9,13 +9,13 @@ import UpdatePost from '../src/modules/posts/components/UpdatePost.vue';
 
 const routes = [
   { path: '/', component: CompStart },
-  { path: '/categories', component: CompStart },
+  { path: '/categories', component: CompStart , name:'home'},
   { path: '/create/category', component: CreateCat },
   { path: '/:id/update/category', component: UpdateCategory, name: 'Editar'},
 
-  { path: '/posts', component: Post },
+  { path: '/posts', component: Post, name:'homePost' },
   { path: '/create/posts', component: CreatePost },
-  { path: '/update/posts', component: UpdatePost, name: 'EditPost'}
+  { path: '/:id/update/posts', component: UpdatePost, name: 'EditPost'}
 
 ]
 

@@ -28,7 +28,8 @@
         }
     },
     methods:{
-        async newCategory(){
+        async newCategory(e){
+            e.preventDefault();
             const options = {
                 method: "POST",
                 headers: { "Content-Type": "application/json"},
