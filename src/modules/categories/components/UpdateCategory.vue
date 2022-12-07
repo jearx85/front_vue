@@ -11,7 +11,10 @@
                     <label for="description" class="form-label">Descripción</label>
                     <textarea type="text" class="form-control" id="description" v-model = "categories.description"></textarea>
                 </div>
-                <button type="submit" class="btn" @click="updateCategory">Actualizar</button>
+                <button type="submit" class="btn btn_update" @click="updateCategory">Actualizar</button>
+                <router-link to="/categories">
+                <button type="submit" class="btn btn_cancel">cancelar</button>
+                </router-link>
             </form>
         </div>
 
@@ -76,14 +79,26 @@
     border: 1px black;
 }
 
-.btn{
+.btn_update{
     background-color: lightslategrey;
     font-weight: bold;
     box-shadow: 1px 1px black;
     width: 15%;
+    margin-right: 10px;
 }
-.btn:hover {
+.btn_update:hover {
   background-color: #4CAF50; /* Green */
+  color: white;
+}
+.btn_cancel{
+    background-color: lightslategrey;
+    font-weight: bold;
+    box-shadow: 1px 1px black;
+    width: 15%;
+    margin-right: 10px;
+}
+.btn_cancel:hover {
+  background-color: orange;
   color: white;
 }
 

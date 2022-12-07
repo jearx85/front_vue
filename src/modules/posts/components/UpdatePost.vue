@@ -30,8 +30,11 @@
             <label for="content" class="form-label">Contenido</label>
             <input type="text" class="form-control" id="content" required name = "content"  v-model="post.content">
         </div>
-        <div>
-            <button class="btn btn-primary" type="submit" @click="updatePost">Actualizar</button>
+        <div class="col-">
+            <button class="btn btn_update" type="submit" @click="updatePost">Actualizar</button>
+            <router-link to="/posts">
+            <button class="btn btn_cancel">Cancelar</button>
+             </router-link>
         </div>
     </form>
 </div> 
@@ -64,7 +67,7 @@
                 const {data: post} = await response.json();
 
                 this.post = post;
-                console.log("created");
+                console.log(post);
             },
             methods:{
                async updatePost(e){
@@ -93,14 +96,26 @@
 </script>
 
 <style scoped>
-.btn{
+.btn_update{
     background-color: lightslategrey;
     font-weight: bold;
     box-shadow: 1px 1px black;
     width: 15%;
+    margin-right: 10px;
 }
 .btn:hover {
   background-color: #4CAF50; /* Green */
+  color: white;
+}
+.btn_cancel{
+    background-color: lightslategrey;
+    font-weight: bold;
+    box-shadow: 1px 1px black;
+    width: 15%;
+    margin-right: 10px;
+}
+.btn_cancel:hover {
+  background-color: orange;
   color: white;
 }
 

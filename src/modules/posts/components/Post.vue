@@ -60,7 +60,7 @@ export default {
         data(){
             return{
                 posts: []
-            }
+    }
         },
         methods:{
             async deletePost(id){
@@ -77,7 +77,7 @@ export default {
                 // console.log(data.data.newList);
                 alert("Post eliminado")
                 this.post = data.data;
-                this.$router.push({name: 'home'});
+                this.$router.push({name: 'homePost'});
             
             }
         }
