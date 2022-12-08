@@ -76,7 +76,7 @@ export default {
                 const data = await response.json();
                 // console.log(data.data.newList);
                 alert("Post eliminado")
-                this.post = data.data;
+                this.posts = data.data;
                 this.$router.push({name: 'homePost'});
             
             }
